@@ -30,7 +30,9 @@
         methods:{
             handleCommand(command) {
                 if(command == 'loginout'){
-                    localStorage.removeItem('cmq_username')
+                    localStorage.removeItem('cmq_username');
+                    localStorage.removeItem('cmq_password');
+                    localStorage.removeItem('cmq_token');
                     this.$router.push('/login');
                 }
             }

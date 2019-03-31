@@ -33,14 +33,10 @@
                                 index: 'doctorform',
                                 title: '账户管理'
                             },
-                            {
-                                index: 'doctoreditor',
-                                title: '账户管理-新增账户'
-                            },
-                            {
-                                index: 'doctoreditor',
-                                title: '账户管理-修改账户'
-                            },
+                            // {
+                            //     index: 'doctoreditor',
+                            //     title: '新增/修改账户'
+                            // },
                             {
                                 index: 'districtmanage',
                                 title: '组织管理'

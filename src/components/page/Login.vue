@@ -26,7 +26,7 @@
         ruleForm: {
           //记住用户
           username: localStorage.getItem('cmq_username'),
-          password: ''
+          password: localStorage.getItem('cmq_password')
         },
         rules: {
           username: [
@@ -44,6 +44,7 @@
         self.$refs[formName].validate((valid) => {
           if (valid) {
             localStorage.setItem('cmq_username',self.ruleForm.username);
+            localStorage.setItem('cmq_password',self.ruleForm.password);
 
             //axios.post('http://47.110.137.26:8080/login','username='+ self.ruleForm.username + '&password=' + self.ruleForm.password)
             //self.$router.push('/readme');
@@ -59,6 +60,7 @@
                 return false;
               }
               //login success
+              localStorage.setItem('cmq_token', response.body.data.token);
               self.$router.push('/doctorform');
             }, response =>{
               //error callback
