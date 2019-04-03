@@ -12,7 +12,7 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
         </div>
-        <p style="font-size:12px;line-height:30px;color:#999;">忘记密码...</p>
+        <p style="font-size:12px;line-height:30px;color:#999;">忘记密码ddd...</p>
       </el-form>
     </div>
   </div>
