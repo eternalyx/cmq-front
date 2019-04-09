@@ -2,21 +2,20 @@
 <div class="custom-tree-container">
 
   <div class="block">
-    <el-tree :data="tree" show-checkbox node-key="id" :expand-on-click-node="false" icon-class="el-icon-arrow-right"
-             :default-expanded-keys="[1, 2, 3]">
+    <el-tree :data="tree" node-key="id" :expand-on-click-node="false" icon-class="el-icon-arrow-right"
+             :default-expanded-keys="treeExpandedKeys" :ref="tree">
       <!-- default-expand-all -->
       <!-- data: 所有的数据, node: 单节点数据 -->
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span>
-          <!--<el-button type="text" size="mini" @click="() => append(data)">-->
           <el-button type="text" size="mini" @click="() => edit(node, data)">
             修改
           </el-button>
-          <el-button type="text" size="mini" @click="() => insert(node, data)">
+          <el-button type="text" size="mini" @click="() => insert(node, data, false)">
             添加同级
           </el-button>
-          <el-button type="text" size="mini" @click="() => insert(node, data)">
+          <el-button type="text" size="mini" @click="() => insert(node, data, true)">
             添加下级
           </el-button>
           <el-button type="text" size="mini" @click="() => remove(node, data)">
@@ -58,9 +57,12 @@
           form: {
             id: '',
             districtCode: '',
-            name: ''
+            name: '',
+            beforeDistrictCode: '',
+            isChildren: null,
           },
-          formLabelWidth: '88px'
+          formLabelWidth: '88px',
+          treeExpandedKeys: [1, 2, 3]
         }
     },
 
@@ -76,7 +78,7 @@
           alert(response.body.message);
         }
         //alert(response.body.data.tree[0].label);
-        this.tree = response.body.data.tree;
+        this.tree = response.body.data.districtTree;
       }, response =>{
         alert(response.body.message);
       })
@@ -99,20 +101,45 @@
         //alert(data);
       },
 
-      insert(node, data) {
+      insert(node, data, isChildren) {
         this.form.id = '';
         this.form.name = '';
-        this.form.districtCode = '';
+        this.form.beforeDistrictCode = '';
+        this.form.isChildren = null;
+
+        var thisDistrictCode = node.data.districtCode;
+
+        this.form.beforeDistrictCode = thisDistrictCode;
+        this.form.isChildren = isChildren ? 1 : 0;
+
+        if(thisDistrictCode.length == 11 && isChildren){
+          alert("无法添加下级组织结构");
+          return false;
+        }
+
+        if(thisDistrictCode == 1 && !isChildren){
+          alert("仅支持中国地区");
+          return false;
+        }
+
+        if(isChildren){
+          //alert(node.data.districtCode)
+          this.form.districtCode = thisDistrictCode
+        }else{
+          this.form.districtCode = thisDistrictCode.substring(0, thisDistrictCode.length - 2);
+        }
+
         this.dialogVisible = true;
       },
 
       remove(node, data) {
-        alert('delete');
+        //alert('delete');
         const header = { token: localStorage.getItem('cmq_token') };
 
         this.$http.post('/api/district/delete', {id: data.id}, {headers: header}
         ).then(response =>{
           window.location.reload();
+          alert("删除成功");
         }, response =>{
           alert(response.body.message);
         })
@@ -133,7 +160,7 @@
 
           this.dialogVisible = false;
           window.location.reload();
-
+          alert("处理成功");
         }, response =>{
           alert(response.body.message);
         })
@@ -152,18 +179,9 @@
         const children = parent.data.children || parent.data;
         const index = children.findIndex(d => d.id === data.id);
         children.splice(index, 1);
-      },
-
-      renderContent(h, { node, data, store }) {
-        return (
-          <span class="custom-tree-node">
-          <span>{node.label}</span>
-          <span>
-          <el-button size="mini" type="text" on-click={ () => this.append(data) }>Append</el-button>
-        <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>Delete</el-button>
-        </span>
-        </span>);
       }
+
+
     }
   };
 </script>

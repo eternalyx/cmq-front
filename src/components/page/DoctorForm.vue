@@ -3,30 +3,50 @@
   <el-container>
 
 
-    <el-aside width="200px">
-      <el-tree :data="tree" show-checkbox node-key="id" :expand-on-click-node="false" icon-class="el-icon-arrow-right"
-               :default-expanded-keys="[1, 2, 3]">
+    <el-aside width="230px">
+      <!--<el-tree :data="tree" show-checkbox node-key="id" :expand-on-click-node="false" icon-class="el-icon-arrow-right"-->
+               <!--:default-expanded-keys="[1, 2, 3]" style="width: 200px">-->
 
-        <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
-       </span>
-      </el-tree>
+        <!--<span class="custom-tree-node" slot-scope="{ node, data }">-->
+        <!--<span>{{ node.label }}</span>-->
+       <!--</span>-->
+      <!--</el-tree>-->
+
+      <!--<div class="custom-tree-container">-->
+
+        <!--<div class="block">-->
+
+      <!--<el-input placeholder="输入关键字进行过滤" v-model="filterText"/> -->
+          <el-tree :data="tree" show-checkbox node-key="id" :expand-on-click-node="false" icon-class="el-icon-arrow-right" :filter-node-method="filterNode"
+                   :props="treeProps" ref="tree" style="border-style: none;" :default-expanded-keys="[1, 2, 3]" @check-change="addSelectedNodes">
+          </el-tree>
+        <!--</div>-->
+      <!--</div>-->
 
     </el-aside>
 
     <el-container>
       <el-header>
         <el-row>
+          <el-col :span="6"></el-col>
           <el-col :span="4"><el-input v-model.trim="params.name" placeholder="居民姓名"></el-input></el-col>
-          <el-col :span="4"><el-input v-model.trim="params.idCardNumber" placeholder="身份证号"></el-input></el-col>
-          <el-col :span="4"><el-button type="primary" @click="seniorSearch" plain>搜索</el-button></el-col>
-          <el-col :span="4"><el-button type="primary" @click="editorUserPage" round>新增用户</el-button></el-col>
-          <el-col :span="4"><el-button type="danger" @click="stopUsingBatch" round>批量禁用</el-button></el-col>
+          <el-col :span="4">
+            <el-input v-model.trim="params.idCardNumber" placeholder="身份证号"></el-input>
+          </el-col>
+          <el-col :span="2">
+            <el-button type="primary" @click="seniorSearch" plain>搜索</el-button>
+          </el-col>
+          <el-col :span="6"></el-col>
+          <el-col :span="6" :offset="8">
+            <el-button type="primary" @click="editorUserPage" round>新增用户</el-button>
+            <el-button type="danger" @click="stopUsingBatch" round>批量禁用</el-button>
+          </el-col>
         </el-row>
       </el-header>
 
         <el-main>
-          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border="true" @selection-change="handleSelectionChange">
+          <!-- border前面的冒号？？？-->
+          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" :border="true" @selection-change="handleSelectionChange">
             <el-table-column type="selection"/>
             <!--<el-table-column label="日期" width="120">-->
               <!--<template slot-scope="scope">{{ scope.row.date }}</template>-->
@@ -34,7 +54,7 @@
             <!--<el-table-column prop="name" label="姓名" width="120"/>-->
             <!--<el-table-column prop="address" label="地址"/>-->
             <el-table-column prop="id" label="id" v-if="false"/>
-            <el-table-column label="姓名" width="80">
+            <el-table-column label="姓名" width="90">
               <template slot-scope="scope">
                 <a v-on:click="detailUserPage(scope.row)" style="color:blue">{{scope.row.name}}</a>
               </template>
@@ -47,7 +67,7 @@
             <el-table-column prop="usageState" label="状态" width="80"/>
             <el-table-column label="操作" width="85">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">密码重置</el-button>
+                <el-button type="primary" size="mini" @click="resetPassword(scope.$index, scope.row)">密码重置</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -76,7 +96,7 @@
         params:{
           name: null,
           idCardNumber: null,
-          distirctIds: [],
+          districtIds: [],
           pageNo: 1,
           pageSize: 10,
           total: 0
@@ -87,7 +107,20 @@
         tableData: [],
         multipleSelection: [],
         total: 12,
-        tree: []
+        tree: [],
+
+        filterText: '',
+
+        treeProps: {
+          label: 'name',
+          children: 'children'
+        }
+      }
+    },
+
+    watch: {
+      filterText(val) {
+        this.$refs.tree.filter(val);
       }
     },
 
@@ -97,7 +130,7 @@
 
       const header = { token: localStorage.getItem('cmq_token') };
       this.$http.get('/api/district/list-as-tree', {headers: header}).then(response =>{
-        //this.tree = response.body.data.tree;
+        this.tree = response.body.data.districtTree;
       }, response =>{
         alert(response.body.message);
       })
@@ -105,6 +138,11 @@
 
 
   methods: {
+
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
 
       editorUserPage(){
         this.$router.push('/doctoreditor');
@@ -158,7 +196,34 @@
     })
   },
 
+    resetPassword(index, row){
+      const header = { token: localStorage.getItem('cmq_token') };
+
+      //alert(1);
+      this.$http.post('/api/doctor/reset-password', {id: row.id},
+        {headers: header}
+      ).then(response =>{
+
+        if(response.body.code === '500'){
+          alert(response.body.message);
+        }
+
+        alert("密码重置为:123456");
+        this.listByPaging();
+
+      }, response =>{
+        alert(response.body.message);
+      })
+    },
+
     seniorSearch(){
+      this.listByPaging();
+    },
+
+    addSelectedNodes(){
+      this.params.districtIds = [];
+      this.params.districtIds = this.$refs.tree.getCheckedKeys();
+
       this.listByPaging();
     },
 
@@ -251,10 +316,11 @@
 
   .el-row {
     margin-bottom: 20px;
-  &:last-child {
+  }
+  :last-child {
      margin-bottom: 0;
    }
-  }
+
   .el-col {
     border-radius: 4px;
   }

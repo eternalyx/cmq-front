@@ -26,8 +26,8 @@ module.exports = {
     //https://blog.csdn.net/qq_33036599/article/details/80313138
     proxyTable: {
       '/api': {
-        target:'http://47.110.137.26:8080',
-        //target:'http://127.0.0.1:8080/cmq',
+        //target:'http://47.110.137.26:8080',
+        target:'http://127.0.0.1:8080',
         changeOrigin:true,
         pathRewrite:{
           '/api':''

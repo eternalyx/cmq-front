@@ -1,27 +1,28 @@
 <template>
-
-<el-form ref="form" :model="form" label-width="100px">
+<el-row :gutter="20">
+  <el-col :span="14">
+    <el-form ref="form" :model="form" label-width="100px">
   <el-form-item label="姓  名：">
-    <el-input v-model="form.name"></el-input>
+    <el-input v-model="form.name" style="width: 35%;"></el-input>
   </el-form-item>
 
   <el-form-item label="性  别：">
-    <el-select v-model="form.sex" placeholder="请选择性别">
+    <el-select v-model="form.sex" placeholder="请选择性别" style="width: 35%;">
       <el-option label="男" value="0"></el-option>
       <el-option label="女" value="1"></el-option>
     </el-select>
   </el-form-item>
 
   <el-form-item label="身份证号：">
-    <el-input v-model="form.idCardNumber"></el-input>
+    <el-input v-model="form.idCardNumber" style="width: 45%"></el-input>
   </el-form-item>
 
   <el-form-item label="手机号：">
-    <el-input v-model="form.mobile"></el-input>
+    <el-input v-model="form.mobile" style="width: 45%"></el-input>
   </el-form-item>
 
   <el-form-item label="医院名称：">
-    <el-input v-model="form.hospitalName"></el-input>
+    <el-input v-model="form.hospitalName" style="width: 45%"></el-input>
   </el-form-item>
 
   <el-form-item label="所属地域：">
@@ -30,35 +31,30 @@
         <el-option v-for="item in form.provinces" :key="item.id" :value="item.id" :label="item.name"></el-option>
       </el-select>
     </el-col>
-    <el-col :span="1"></el-col>
 
     <el-col :span="4">
       <el-select v-model="form.second" @change="onCityChange" placeholder="市" v-if="form.cityShow">
         <el-option v-for="item in form.cities" :key="item.id" :value="item.id" :label="item.name"></el-option>
       </el-select>
     </el-col>
-    <el-col :span="1"></el-col>
 
     <el-col :span="4">
       <el-select v-model="form.third" @change="onAreaChange" placeholder="区/县" v-if="form.areaShow">
         <el-option v-for="item in form.areaes" :key="item.id" :value="item.id" :label="item.name"></el-option>
       </el-select>
     </el-col>
-    <el-col :span="1"></el-col>
 
     <el-col :span="4">
       <el-select v-model="form.fourth" @change="onTownChange" placeholder="镇" v-if="form.townShow">
         <el-option v-for="item in form.towns" :key="item.id" :value="item.id" :label="item.name"></el-option>
       </el-select>
     </el-col>
-    <el-col :span="1"></el-col>
 
     <el-col :span="4">
       <el-select v-model="form.fifth" @change="onVillageChange" placeholder="村" v-if="form.villageShow" multiple>
         <el-option v-for="item in form.villages" :key="item.id" :value="item.id" :label="item.name"></el-option>
       </el-select>
     </el-col>
-    <el-col :span="1"></el-col>
   </el-form-item>
 
   <el-form-item label="权  限：">
@@ -66,17 +62,11 @@
   </el-form-item>
 
   <el-form-item label="备  注：">
-    <el-input type="textarea" v-model="form.memo"></el-input>
+    <el-input type="textarea" v-model="form.memo" style="width: 80%"></el-input>
   </el-form-item>
 
-  <div class="custom-tree-container">
 
-    <div class="block">
-      <el-tree :data="tree" show-checkbox node-key="id" :expand-on-click-node="false" default-expand-all icon-class="el-icon-arrow-right"
-               :props="treeProps" ref="tree" @check-change="addSeletedNodes">
-      </el-tree>
-    </div>
-  </div>
+
 
 
   <el-form-item>
@@ -84,6 +74,24 @@
     <el-button @click="doctorPage">返回</el-button>
   </el-form-item>
 </el-form>
+</el-col>
+
+  <el-col :span="10">
+    <div class="custom-tree-container">
+
+      <div class="block">
+        <br/><br/>
+        <el-tree :data="tree" show-checkbox node-key="id" :expand-on-click-node="false" default-expand-all icon-class="el-icon-arrow-right"
+                 :props="treeProps" ref="tree" @check-change="addSelectedNodes" style="border-style: none;">
+        </el-tree>
+      </div>
+    </div>
+
+  </el-col>
+
+</el-row>
+
+
 </template>
 
 <script>
@@ -126,7 +134,7 @@
         tree: [],
         treeProps: {
           label: 'name',
-          childrem: 'children'
+          children: 'children'
         }
 
       }
@@ -171,7 +179,7 @@
       onSubmit() {
         //console.log('submit!');
         this.$http.post('/api/doctor/insert-or-update-configuration', this.form, {headers: header}).then(response =>{
-          alert('save success!');
+          alert('保存成功!');
           this.doctorPage();
         }, response =>{
           alert(response.body.message);
@@ -270,7 +278,7 @@
         this.form.districtIds = this.form.fifth;
       },
 
-      addSeletedNodes() {
+      addSelectedNodes() {
         //parent node 只有在所有子节点都选中，才代表被选中
         //console.log(this.$refs.tree.getCheckedKeys());
         this.form.functionIds = [];
