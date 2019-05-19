@@ -28,6 +28,20 @@ export default new Router({
       ]
     },
     {
+      path: '/questionnaireform',
+      component: resolve => require(['../components/common/Home.vue'], resolve),
+      children:[
+        {
+          path: '/',
+          component: resolve => require(['../components/page/QuestionnaireForm.vue'], resolve)
+        },
+        {
+          path: '/detailPage',
+          component: resolve => resolve(['../components/demo/info.vue'], resolve)
+        }
+      ]
+    },
+    {
       path: '/login',
       component: resolve => require(['../components/page/Login.vue'], resolve)
     }

@@ -33,16 +33,27 @@
                                 index: 'doctorform',
                                 title: '账户管理'
                             },
-                            // {
-                            //     index: 'doctoreditor',
-                            //     title: '新增/修改账户'
-                            // },
                             {
                                 index: 'districtmanage',
                                 title: '组织管理'
                             }
                         ]
-                    }
+                    },
+                  {
+                    icon: 'el-icon-setting',
+                    index: '2',
+                    title: '医生登录',
+                    subs: [
+                      {
+                        index: 'questionnaireform',
+                        title: '体质辨识'
+                      },
+                      {
+                        index: 'personalinformation',
+                        title: '个人信息'
+                      }
+                    ]
+                  }
                 ]
             }
         },
