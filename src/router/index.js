@@ -25,6 +25,14 @@ export default new Router({
           path: '/districtmanage',
           component: resolve => require(['../components/page/DistrictManage.vue'], resolve)
         }
+        // {
+        //   path: '/questionnaireform',
+        //   component: resolve => require(['../components/page/QuestionnaireForm.vue'], resolve)
+        // },
+        // {
+        //   path: '/detailQuestionnaire',
+        //   component: resolve => resolve(['../components/demo/QuestionnaireDetail.vue'], resolve)
+        // }
       ]
     },
     {
@@ -36,8 +44,12 @@ export default new Router({
           component: resolve => require(['../components/page/QuestionnaireForm.vue'], resolve)
         },
         {
-          path: '/detailPage',
-          component: resolve => resolve(['../components/demo/info.vue'], resolve)
+          path: '/detailQuestionnaire',
+          component: resolve => require(['../components/page/QuestionnaireDetail.vue'], resolve)
+        },
+        {
+          path: '/editQuestionnaire',
+          component: resolve => require(['../components/page/QuestionnaireEditor.vue'], resolve)
         }
       ]
     },

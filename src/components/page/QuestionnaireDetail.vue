@@ -5,19 +5,26 @@
     element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <div style="text-align: right">
-            <router-link to="/traditional_Chinese_medicine">
+            <el-button @click="editQuestionnaire">编辑</el-button>
+            <router-link to="/questionnaireform">
                 <el-button type="info">返回</el-button>
             </router-link>
-            <el-button size="small" @click="doPrint">打印</el-button>
+            <el-button @click="doPrint">打印</el-button>
         </div>
         <div class="print">
 	        <div class="table-info">
 	        	<h2>老年人中医药健康管理服务记录表</h2>
 	        	<div>
 		            <span>姓名:</span>
-		            <label class="name-input">{{name}}</label>
-		            <span>编号:</span>
-		            <label class="number-input">{{number}}</label>
+		            <label class="name-input">{{visitData.residentName}}</label>
+                <span>性别:</span>
+                <label class="name-input">{{visitData.sex}}</label>
+                <span>年龄:</span>
+                <label class="name-input">{{visitData.age}}</label>
+		            <span>身份证号:</span>
+		            <label class="number-input">{{visitData.idCardNumber}}</label>
+                <span>地址:</span>
+                <label class="name-input">{{visitData.address}}</label>
 		        </div>
 		        <table width="100%">
 		        	<tr>
@@ -204,7 +211,7 @@
                 <td style="text-align:left"><span><span class="table_three">1.</span>得分<span class="count-span">{{visitData.xueyu}}</span><br><span v-bind:class="[visitData.xueyuJ==='是' ?  judgeName:'table_three']">2.</span>是<br><span v-bind:class="[visitData.xueyuJ==='倾向是' ?  judgeName:'table_three']">3.</span>倾向是</span></td>
                 <td style="text-align:left"><span><span class="table_three">1.</span>得分<span class="count-span">{{visitData.qiyu}}</span><br><span v-bind:class="[visitData.qiyuJ==='是' ?  judgeName:'table_three']">2.</span>是<br><span v-bind:class="[visitData.qiyuJ==='倾向是' ?  judgeName:'table_three']">3.</span>倾向是</span></td>
                 <td style="text-align:left"><span><span class="table_three">1.</span>得分<span class="count-span">{{visitData.tebing}}</span><br><span v-bind:class="[visitData.tebingJ==='是' ?  judgeName:'table_three']">2.</span>是<br><span v-bind:class="[visitData.tebingJ==='倾向是' ?  judgeName:'table_three']">3.</span>倾向是</span></td>
-                <td style="text-align:left"><span><span class="table_three">1.</span>得分<span class="count-span">{{visitData.pinghe}}</span><br><span v-bind:class="[visitData.pingheJ==='是' ?  judgeName:'table_three']">2.</span>是<br><span v-bind:class="[visitData.pingheJ==='基本是' ?  judgeName:'table_three']">3.</span>基本是</span></td>
+                <td style="text-align:left"><span><span class="table_three">1.</span>得分<span class="count-span">{{visitData.pinghe}}</span><br><span v-bind:class="[visitData.pingheJ==='是' ?  judgeName:'table_three']">2.</span>是<br><span v-bind:class="[visitData.pingheJ==='倾向是' ?  judgeName:'table_three']">3.</span>倾向是</span></td>
 		        	</tr>
 							<tr>
 		        		<td><span>中医药保健指导</span></td>
@@ -231,16 +238,15 @@
 </template>  
 
 <script>
+    const header = {token: localStorage.getItem('cmq_token')};
+
     export default {
         data() {
             return {
+        id:null,
 				loading:false,
 				visitData:{},
 				answer:[1,2,3,4,5],
-				className:"mark_circle",
-				judgeName:"mark_judge",
-				name:'',
-				number:'',
 				qixuGuidance:[],
 				yangxuGuidance:[],
 				yinxuGuidance:[],
@@ -250,74 +256,70 @@
 				qiyuGuidance:[],
 				tebingGuidance:[],
 				pingheGuidance:[],
-			
+        className:"mark_circle",
+        judgeName:"mark_judge"
             }
         },
         mounted() {
 						this.getTableList();
         },
-        watch: {
-            // 监测 route 参数变化
-            '$route' (to, from) {
-                this.getTableList();
-            }
-        },
         methods: {
             // 获取列表数据
             getTableList() {
-								this.loading = true;
-								let obj = {};
-								obj.id = this.$route.params.id;
-								let areaCodeTemp = this.$route.params.areaCode;
-								if(areaCodeTemp !=='null'){
-									obj.areaCode = this.$route.params.areaCode;
-								}
-                this.$get('/tzData/selectDetail',obj).then((data) => {
+              this.$http.get('/api/web/questionnaire/detail?questionnaireId=' + this.$route.query.id, {headers: header}).then(response => {
                     this.loading = false;
-                    if(data.status===0){
-                        this.name = data.data.name;
-												this.number = data.data.number;
-												this.visitData = data.data;
-												if(this.visitData.qixuGuidance){
-													this.qixuGuidance = JSON.parse(this.visitData.qixuGuidance);
-												}
-												if(this.visitData.yangxuGuidance){
-													this.yangxuGuidance = JSON.parse(this.visitData.yangxuGuidance);
+                    if(response.body.code==='200'){
+												this.visitData = response.body.data.detail;
+                        if(this.visitData.qixuGuidance){
+                          this.qixuGuidance = (this.visitData.qixuGuidance);
+                        }
+                        if(this.visitData.yangxuGuidance){
+													this.yangxuGuidance = this.visitData.yangxuGuidance;
 												}
 												if(this.visitData.yinxuGuidance){
-													this.yinxuGuidance = JSON.parse(this.visitData.yinxuGuidance);
+													this.yinxuGuidance = this.visitData.yinxuGuidance;
 												}
 												if(this.visitData.tanshiGuidance){
-													this.tanshiGuidance = JSON.parse(this.visitData.tanshiGuidance);
+													this.tanshiGuidance = (this.visitData.tanshiGuidance);
 												}
 												if(this.visitData.shireGuidance){
-													this.shireGuidance = JSON.parse(this.visitData.shireGuidance);
+													this.shireGuidance = (this.visitData.shireGuidance);
 												}
 												if(this.visitData.xueyuGuidance){
-													this.xueyuGuidance = JSON.parse(this.visitData.xueyuGuidance);
+													this.xueyuGuidance = (this.visitData.xueyuGuidance);
 												}
 												if(this.visitData.qiyuGuidance){
-													this.qiyuGuidance = JSON.parse(this.visitData.qiyuGuidance);
+													this.qiyuGuidance = (this.visitData.qiyuGuidance);
 												}
 												if(this.visitData.tebingGuidance){
-													this.tebingGuidance = JSON.parse(this.visitData.tebingGuidance);
+													this.tebingGuidance = (this.visitData.tebingGuidance);
 												}
 												if(this.visitData.pingheGuidance){
-													this.pingheGuidance = JSON.parse(this.visitData.pingheGuidance);
+													this.pingheGuidance = (this.visitData.pingheGuidance);
 												}
                     }
                 }).catch((data) =>{
-                    console.log(data.msg);
+                    //console.log(response.message);
                     this.loading = false;
                 })
             },
-            doPrint() {
+
+            editQuestionnaire(){
+              this.$router.push({
+                path: '/editQuestionnaire',
+                query: {
+                  id: this.$route.query.id
+                }
+              });
+            },
+
+    doPrint() {
 				document.body.style.overflow = "auto";
 				document.body.style.height = "auto";
 				var prnhtml = document.getElementsByClassName('print')[0].innerHTML;
 				window.document.body.innerHTML = prnhtml;
 				var styleEl = document.createElement('style');
-				styleEl.innerHTML = 
+				styleEl.innerHTML =
 				`@media print{
 					.pageBreak{
 							page-break-after:always;
@@ -370,7 +372,7 @@
 		    color: #333;
 				margin-top:40px;
 		}
-	
+
 		.table-info h2 {
 		    text-align: center;
 		    font-size: 20px;
@@ -457,20 +459,4 @@
 			line-height: 15px;
 			text-align: center;
 		}
-		/* .judge{
-			display: inline-block;
-				width: 15px;
-				height: 15px;
-				text-align: center;
-				line-height: 15px;
-		} */
-		/* @media print{
-			.pageBreak{
-					page-break-after:always;
-			}
-			@page{
-				margin:0;
-				size: landscape;
-			}
-		} */
 </style>

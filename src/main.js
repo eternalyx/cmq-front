@@ -17,6 +17,8 @@ import axios from 'axios'; //同域
 
 import VueResource from 'vue-resource'; //跨域请求
 
+import formatDate from './common/js/date.js';
+
 Vue.use(ElementUI);
 //Vue.use(Vuex);
 Vue.use(VueResource);

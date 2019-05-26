@@ -1,0 +1,18 @@
+/*人口数*/
+.people-count{text-align: right; margin-bottom: 15px;}
+.people-count>span{display: inline-block; padding: 10px; background: #f3f3f3; margin-left: 5px; color: #666; font-size: 14px;}
+.people-num{text-align: right; margin-bottom: 13px;}
+.people-num span{display: inline-block;margin-left: 10px; color: #666; font-size: 14px;}
+/*滚动条样式*/
+::-webkit-scrollbar{width:10px;height:8px;background-color:#fff;}
+::-webkit-scrollbar-thumb{background-color:#ddd;border-radius:10px;border:2px solid #ddd;}
+::-webkit-scrollbar-thumb:window-inactive{background-color:#ddd}
+/*去除浮动*/
+.clearfix{content: ""; display: block; overflow: hidden; clear: both;}
+/*树形弹窗*/
+.dialog-wrap{position: relative;height: 300px;font-size: 14px;}
+.dialog-wrap .dialog-left,.dialog-wrap .dialog-right{float: left;width: 49%;height: 100%;overflow: auto;}
+.dialog-wrap .dialog-left{border-right: 1px dotted #ddd;}
+.dialog-wrap .people-wrap{padding-left: 15px;}
+.dialog-wrap .el-checkbox{display: block;}
+.dialog-wrap .el-checkbox+.el-checkbox{margin-left: 0;}

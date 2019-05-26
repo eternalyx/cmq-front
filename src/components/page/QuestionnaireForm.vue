@@ -36,7 +36,7 @@
             </el-table-column>
             <el-table-column prop="sex" label="性别" width="70"/>
             <el-table-column prop="idCardNumber" label="身份证号" width="180"/>
-            <el-table-column prop="doctorName" label="指导医生" width="90"/>
+            <el-table-column prop="doctorName" label="指导医生" width="95"/>
             <el-table-column prop="guidanceTime" label="指导日期" width="150"/>
             <el-table-column prop="result" label="辨识结果"/>
           </el-table>
@@ -69,16 +69,11 @@
           total: 0
         },
         tableData: [],
-
         questionnaireIds: [],
-
         multipleSelection: [],
-
         total: 12,
         tree: [],
-
         filterText: '',
-
         treeProps: {
           label: 'name',
           children: 'children'
@@ -90,6 +85,12 @@
       this.list();
     },
 
+    filters:{
+      formatDate(time){
+        let date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    },
 
     methods: {
       filterNode(value, data) {
@@ -98,15 +99,15 @@
       },
 
       createQuestionnaire() {
-        this.$router.push('/doctoreditor');
+        this.$router.push('/editQuestionnaire');
       },
 
       detailPage(row) {
         this.$router.push({
-          path: '/detailPage',
-          // query: {
-          //   id: row.id
-          // }
+          path: '/detailQuestionnaire',
+          query: {
+            id: row.id
+          }
         });
       },
 
@@ -127,7 +128,7 @@
       list() {
         const header = {token: localStorage.getItem('cmq_token')};
 
-        this.$http.post('/api/questionnaire/list-by-paging', this.params, {headers: header}).then(response => {
+        this.$http.post('/api/web/questionnaire/list-by-paging', this.params, {headers: header}).then(response => {
           if (response.body.code === '500') {
             alert(response.body.message);
           }
@@ -156,7 +157,7 @@
         );
 
         const header = {token: localStorage.getItem('cmq_token')};
-        this.$http.post('/api/questionnaire/delete-some', {questionnaireIds: this.questionnaireIds}, {headers: header}).then(response => {
+        this.$http.post('/api/web/questionnaire/delete-some', {questionnaireIds: this.questionnaireIds}, {headers: header}).then(response => {
           this.list();
 
           if (response.body.code === '500') {

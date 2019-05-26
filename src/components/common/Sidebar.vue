@@ -47,11 +47,11 @@
                       {
                         index: 'questionnaireform',
                         title: '体质辨识'
-                      },
-                      {
-                        index: 'personalinformation',
-                        title: '个人信息'
                       }
+                      // {
+                      //   index: 'personalinformation',
+                      //   title: '个人信息'
+                      // }
                     ]
                   }
                 ]

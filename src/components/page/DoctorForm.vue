@@ -143,7 +143,6 @@
 
 
     methods: {
-
       filterNode(value, data) {
         if (!value) return true;
         return data.label.indexOf(value) !== -1;
@@ -153,7 +152,6 @@
         this.$router.push('/doctoreditor');
       },
 
-
       detailUserPage(row) {
 
         this.$router.push({
@@ -162,7 +160,6 @@
             id: row.id
           }
         });
-
       },
 
       toggleSelection(rows) {
@@ -203,8 +200,6 @@
 
       resetPassword(index, row) {
         const header = {token: localStorage.getItem('cmq_token')};
-
-        //alert(1);
         this.$http.post('/api/doctor/reset-password', {id: row.id},
           {headers: header}
         ).then(response => {
