@@ -128,7 +128,7 @@
       list() {
         const header = {token: localStorage.getItem('cmq_token')};
 
-        this.$http.post('/api/web/questionnaire/list-by-paging', this.params, {headers: header}).then(response => {
+        this.$http.post('/api/web-questionnaire/list-by-paging', this.params, {headers: header}).then(response => {
           if (response.body.code === '500') {
             alert(response.body.message);
           }
@@ -157,7 +157,7 @@
         );
 
         const header = {token: localStorage.getItem('cmq_token')};
-        this.$http.post('/api/web/questionnaire/delete-some', {questionnaireIds: this.questionnaireIds}, {headers: header}).then(response => {
+        this.$http.post('/api/web-questionnaire/delete-some', {questionnaireIds: this.questionnaireIds}, {headers: header}).then(response => {
           this.list();
 
           if (response.body.code === '500') {

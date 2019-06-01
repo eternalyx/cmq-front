@@ -760,7 +760,7 @@
                 // if(areaCodeTemp !=='null'){
                 //     obj.areaCode = this.$route.params.areaCode;
                 // }
-              this.$http.get('/api/web/questionnaire/detail?questionnaireId=' + this.$route.query.id, {headers: header}).then(response => {
+              this.$http.get('/api/web-questionnaire/detail?questionnaireId=' + this.$route.query.id, {headers: header}).then(response => {
                     this.loading = false;
                   if(response.body.code==='200'){
                     this.visitData = response.body.data.detail;
@@ -1136,7 +1136,7 @@
                 // this.visitData.areaCode = this.$route.params.areaCode;
 
                 this.visitData.id = this.$route.query.id;
-                this.$http.post('/api/web/questionnaire/save', this.visitData, {headers: header}).then(response => {
+                this.$http.post('/api/web-questionnaire/save', this.visitData, {headers: header}).then(response => {
                   alert("操作成功");
                   this.$router.push("/questionnaireform");
                 }).catch((data) =>{

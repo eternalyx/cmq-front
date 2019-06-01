@@ -266,7 +266,7 @@
         methods: {
             // 获取列表数据
             getTableList() {
-              this.$http.get('/api/web/questionnaire/detail?questionnaireId=' + this.$route.query.id, {headers: header}).then(response => {
+              this.$http.get('/api/web-questionnaire/detail?questionnaireId=' + this.$route.query.id, {headers: header}).then(response => {
                     this.loading = false;
                     if(response.body.code==='200'){
 												this.visitData = response.body.data.detail;
