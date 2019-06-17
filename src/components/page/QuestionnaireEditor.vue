@@ -498,7 +498,7 @@
                 </td>
                 <td colspan="2">医生签名<span style="color:red;font-size:22px">*</span></td>
                 <td colspan="3">
-                  <input type="text" class="long-input" v-model="visitData.op"/>
+                  <input type="text" class="long-input" v-model="visitData.op" disabled="true"/>
                 </td>
             </tr>
             <!--<tr>-->

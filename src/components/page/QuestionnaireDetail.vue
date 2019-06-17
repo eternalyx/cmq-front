@@ -13,20 +13,24 @@
         </div>
         <div class="print">
 	        <div class="table-info">
-	        	<h2>老年人中医药健康管理服务记录表</h2>
-	        	<div>
-		            <span>姓名:</span>
+	        	<h1 align="center" style="margin-top: 200px">老年人中医药健康管理服务记录表</h1>
+	        	<div style="margin-top: 50px">
+		            <span class="span-style">姓名:</span>
 		            <label class="name-input">{{visitData.residentName}}</label>
-                <span>性别:</span>
+                <br>
+                <span class="span-style">性别:</span>
                 <label class="name-input">{{visitData.sex}}</label>
-                <span>年龄:</span>
+                <br>
+                <span class="span-style">年龄:</span>
                 <label class="name-input">{{visitData.age}}</label>
-		            <span>身份证号:</span>
+                <br>
+		            <span class="span-style">身份证号:</span>
 		            <label class="number-input">{{visitData.idCardNumber}}</label>
-                <span>地址:</span>
+                <br>
+                <span class="span-style">地址:</span>
                 <label class="name-input">{{visitData.address}}</label>
 		        </div>
-		        <table width="100%">
+		        <table width="100%" style="margin-top: 400px">
 		        	<tr>
 		        		<td colspan="5" style="width:50%;text-align: left">&nbsp;&nbsp;&nbsp;请根据近一年的体验和感觉，回答以下问题。</td>
 		        		<td style="width:10%">没有<br>(根本不/从来没有)</td>
@@ -240,6 +244,8 @@
 <script>
     const header = {token: localStorage.getItem('cmq_token')};
 
+    import {formatDate} from "../../common/js/date";
+
     export default {
         data() {
             return {
@@ -262,6 +268,12 @@
         },
         mounted() {
 						this.getTableList();
+        },
+        filters:{
+          formatDate(time){
+            let date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd hh:mm');
+          }
         },
         methods: {
             // 获取列表数据
@@ -341,13 +353,17 @@
 <style scoped>
     @import '../../assets/common.css';
 
+    .span-style {
+      font-size: 25px;
+      margin-left: 300px;
+    }
     .name-input {
 		    width: 100px;
-		    font-size: 16px;
+		    font-size: 25px;
 		    margin-left: 5px;
 		    margin-bottom: 5px;
 		    border: none;
-		    border-bottom: 1px solid #999;
+		    #border-bottom: 1px solid #999;
 		    outline: 0;
 		    background: #fff;
 		    margin-right: 12px;
@@ -355,11 +371,11 @@
 		}
 		.number-input {
 		    width: 200px;
-		    font-size: 16px;
+		    font-size: 25px;
 		    margin-left: 5px;
 		    margin-bottom: 5px;
 		    border: none;
-		    border-bottom: 1px solid #999;
+		    #border-bottom: 1px solid #999;
 		    outline: 0;
 		    background: #fff;
 		    margin-right: 12px;
