@@ -85,7 +85,7 @@
         </div>
 
         <div class="pageBreak"></div>
-        <h1 align="center">中医药健康教育保健处方</h1>
+        <h1 align="center" style="margin-top: 30px">中医药健康教育保健处方</h1>
         <h3>建议：</h3>
         <!-- v-html标签 -->
         <label v-html="visitData.advice">{{visitData.advice}}</label>
@@ -105,7 +105,7 @@
 
         <!-- 打印分页 -->
         <div class="pageBreak"/>
-        <table width="100%">
+        <table width="100%" style="margin-top: 50px">
           <tr>
             <td colspan="5" style="width:50%;text-align: left">&nbsp;&nbsp;&nbsp;请根据近一年的体验和感觉，回答以下问题。</td>
             <td style="width:10%">没有<br>(根本不/从来没有)</td>
