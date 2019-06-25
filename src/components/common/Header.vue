@@ -23,7 +23,7 @@
         },
         computed:{
             username(){
-                let username = localStorage.getItem('cmq_username');
+                let username = '你好，' + localStorage.getItem('cmq_doctor_name');
                 return username ? username : this.name;
             }
         },

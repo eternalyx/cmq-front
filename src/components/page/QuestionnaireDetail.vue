@@ -18,32 +18,32 @@
           <!--<span class="span-style">地址:</span>-->
           <!--<label>{{visitData.address}}</label>-->
           <!--<br>-->
-          <span class="span-style">姓名:</span>
-          <label class="span-style">{{visitData.residentName}}</label>
+          <span class="span-style">姓名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <label class="label-style">{{visitData.residentName}}</label>
           <br>
-          <span class="span-style">性别:</span>
-          <label class="span-style">{{visitData.sex}}</label>
+          <span class="span-style">性别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <label class="label-style">{{visitData.sex}}</label>
           <br>
           <span class="span-style">出生日期:</span>
-          <label class="">{{visitData.birthdayStr}}</label>
+          <label class="label-style">{{visitData.birthdayStr}}</label>
           <br>
-          <span class="span-style">年龄:</span>
-          <label class="span-style">{{visitData.age}}</label>
+          <span class="span-style">年龄:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <label class="label-style">{{visitData.age}}</label>
           <br>
           <span class="span-style">身份证号:</span>
-          <label class="span-style">{{visitData.idCardNumber}}</label>
+          <label class="label-style">{{visitData.idCardNumber}}</label>
           <br>
           <span class="span-style">联系电话:</span>
-          <label class="">{{visitData.residentPhone}}</label>
+          <label class="label-style">{{visitData.residentPhone}}</label>
           <br>
           <span class="span-style">建档日期:</span>
-          <label class="">{{visitData.date}}</label>
+          <label class="label-style">{{visitData.date}}</label>
           <br>
           <span class="span-style">测试日期:</span>
-          <label class="">{{visitData.date}}</label>
+          <label class="label-style">{{visitData.date}}</label>
           <br>
           <span class="span-style">家庭地址:</span>
-          <label class="">{{visitData.address}}</label>
+          <label class="label-style">{{visitData.address}}</label>
         </div>
 
         <table id="result-table">
@@ -95,13 +95,15 @@
         <h3>其它建议：</h3>
         <label v-html="visitData.otherAdvice">{{visitData.otherAdvice}}</label>
 
-        <br><br><br>
-        <h3>医师：{{visitData.op}}&nbsp;&nbsp;&nbsp;&nbsp;患者签字：</h3>
+        <br><br><br><br><br><br>
+        <h3>医师：{{visitData.op}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          患者签字：</h3>
 
-        <br>
+        <br><br><br>
         <h3>联系地址：{{visitData.doctorAddress}}</h3>
 
-        <br>
+        <br><br><br>
         <h3>联系电话：{{visitData.doctorPhone}}</h3>
 
         <!-- 打印分页 -->
@@ -593,6 +595,10 @@
   .span-style {
     font-size: 15px;
     margin-left: 50px;
+  }
+
+  .label-style {
+    font-size: 15px;
   }
 
   .name-input {

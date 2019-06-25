@@ -564,7 +564,7 @@
                             tebingJ:'',
                             pingheJ:'',
                             date: this.getNowFormatDate(),
-                            op:localStorage.getItem('name'),
+                            op:localStorage.getItem('cmq_doctor_name'),
                             },
                 qixuGuidance:[],
                 yangxuGuidance:[],

@@ -63,6 +63,7 @@
               }
               //login success
               localStorage.setItem('cmq_token', response.body.data.token);
+              localStorage.setItem('cmq_doctor_name', response.body.data.doctorName)
               self.$router.push('/doctorform');
             }, response => {
               //error callback
