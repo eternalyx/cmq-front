@@ -74,14 +74,15 @@
           </tr>
         </table>
 
-        <div class="mySchart">
-          <schart :canvasId="canvasId"
+        <div>
+          <schart class="mySchart"
+                  :canvasId="canvasId"
                   :type="type"
-                  :width="width"
-                  :height="height"
+
                   :data="data"
                   :options="options"
           ></schart>
+          <!--  :width="width" :height="height" -->
         </div>
 
         <div class="pageBreak"></div>
@@ -666,6 +667,11 @@
     height: 15px;
     line-height: 15px;
     text-align: center;
+  }
+
+  .mySchart{
+    width: 800px;
+    height: 300px;
   }
 
 </style>
