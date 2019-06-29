@@ -680,4 +680,58 @@
     height: 300px;
   }
 
+  .short-input {
+    width: 80px;
+    height: 20px;
+    margin: 6px;
+  }
+
+  .long-input {
+    min-width: 150px;
+    height: 20px;
+    margin: 6px;
+  }
+
+  .result-span {
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    float: right;
+    text-align: center;
+    border: 1px solid #000000;
+    background: #fff;
+  }
+  .result-span-list {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    text-align: center;
+    border: 1px solid #000000;
+    background: #fff;
+    vertical-align: top;
+  }
+
+  .result-span-list-wrap{
+    float: right;
+  }
+
+  .mark_circle{
+    border: solid 1px black;
+    border-radius: 50%;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+  }
+  .mark_judge{
+    border: solid 1px black;
+    border-radius: 50%;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+  }
+
 </style>
